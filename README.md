@@ -19,6 +19,8 @@ Daksh's Objective
   - Elicit and present the perceptions of citizens at a local level.
   - Present human development indicators at the most important unit of political activity- the constituency.
   - Promote active citizen participation to ensure accountability in politics and governance.
+  
+More Introductory resources on the [wiki page](https://github.com/DataKind-BLR/Daksh-Sprint-2018/wiki)
 
 ## Problem Area
 During this collaboration with DataKindBLR, DAKSH wants to explore how can we use their data to **"Empower Judges with Data Driven Approach"**.
