@@ -1,0 +1,67 @@
+---
+title: "R Notebook"
+output:
+  html_document: default
+  html_notebook: default
+---
+
+```{r}
+library(tidyverse)
+library(DT)
+
+
+#Read DAta 
+crnagarCases <- read_csv("senior_civil_judge_and_cjm_court,_chamarajanagar_cases_processed.csv")
+crnagarHearing <- read_csv("senior_civil_judge_and_cjm_court,_chamarajanagar_hearings_processed.csv")
+
+crnagarData <- left_join(crnagarHearing, crnagarCases, 
+                         by = c("CaseInformationId" = "Id"))
+
+
+
+```
+```{r}
+#crnagarDataCharacter <- crnagarData %>% select_if(is_character) %>% 
+#  lapply(as.factor) %>% data.frame()
+
+#summary(factor(crnagarData$BeforeHonourableJudges))
+summary(factor(crnagarData$BeforeHonourableJudgeOne))
+#summary(factor(crnagarData$BeforeHonarbleJudges))
+
+```
+```{r}
+datatable(data.frame(summary(factor(crnagarData$PurposeOfHearing))))
+```
+```{r}
+datatable(data.frame(summary(factor(crnagarData$CourtName.x))))
+
+```
+```{r}
+datatable(data.frame(summary(factor(crnagarData$Njdg_Judge_Name.x))))
+```
+
+```{r}
+datatable(data.frame(summary(factor(crnagarData$CaseInformationId))))
+
+```
+```{r}
+singleCase <- crnagarData %>% filter(CaseInformationId == "3a066c57-fe36-405a-8a77-fb13d09e7436")
+
+singleCaseDetails <- cbind(singleCase$HearingDate,singleCase$BusinessOnDate,singleCase$FirstHearingDate)
+
+datatable(singleCaseDetails)
+```
+
+```{r}
+crnagarData$Pendency <- crnagarData$BusinessOnDate - crnagarData$FirstHearingDate 
+crnagarData$PendencyLogical <- !is.na(crnagarData$Pendency)
+crnagarDataPendency <- crnagarData %>% filter(PendencyLogical == TRUE)
+crnagarDataPendency <- crnagarDataPendency %>% 
+  group_by(CaseInformationId) %>%
+  filter(Pendency == max(Pendency))
+
+chq <- crnagarDataPendency[as.numeric(crnagarDataPendency$Pendency) < 0,]
+
+datatable(chq)
+```
+
