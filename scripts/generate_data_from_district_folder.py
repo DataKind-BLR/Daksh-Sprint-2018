@@ -63,7 +63,7 @@ def process_and_store_data(filename, cases=True):
     table_name = 'cases' if cases else 'hearings'
     processed_data.to_sql(name=table_name, if_exists='replace', con=engine, chunksize=10000)
     processed_data_filename = filename.split('.')[0] + '_processed.csv'
-    processed_case_files.to_csv(processed_data_filename)
+    processed_data.to_csv(processed_data_filename)
     return True
 
 def main(folder_path):

@@ -108,3 +108,4 @@ venv.bak/
 *.xlsx
 *.rar
 *.sqlite
+*data/
